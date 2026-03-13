@@ -120,5 +120,5 @@ CREATE INDEX idx_test_drives_date ON test_drives(scheduled_date);
 
 -- Seed admin user (password: admin123)
 INSERT INTO users (name, email, password, role, phone, status)
-VALUES ('Admin User', 'admin@carcrm.com', '$2a$10$8K1p/a0dL1LXMIgoEDFrwOfc6cXHiMZ6QhBKz0S5OqfRGwMJEuVGi', 'admin', '1234567890', 'active')
+VALUES ('Admin User', 'admin@carcrm.com', '$2a$10$269Fe98tyutNmNd6ziaXDe/4geY8qn5kit.V4YaKKBuuX/OJD5DYq', 'admin', '1234567890', 'active')
 ON CONFLICT (email) DO NOTHING;
