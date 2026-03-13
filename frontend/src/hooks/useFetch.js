@@ -12,7 +12,7 @@ export function useFetch(fetchFn, deps = []) {
       .then((res) => setData(res.data))
       .catch((err) => setError(err.response?.data?.error || err.message))
       .finally(() => setLoading(false));
-  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
+  }, deps); // eslint-disable-line
 
   useEffect(() => {
     refetch();
