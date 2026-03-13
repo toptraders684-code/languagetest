@@ -15,7 +15,7 @@ import UsersPage from './pages/Users/UsersPage';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<Layout />}>
