@@ -5,8 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AutoCRM - Car Resale Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #141414; color: #e5e5e5; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #141414; }
+    ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #666; }
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+  </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-[#141414] text-[#e5e5e5]">
   <div id="root"></div>
 </body>
 </html>

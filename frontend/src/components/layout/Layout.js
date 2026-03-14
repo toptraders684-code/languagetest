@@ -8,8 +8,8 @@ export default function Layout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#141414]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#E50914]"></div>
       </div>
     );
   }
@@ -17,7 +17,7 @@ export default function Layout() {
   if (!user) return <Navigate to="/login" />;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#141414]">
       <Sidebar />
       <main className="flex-1 lg:ml-0 p-4 md:p-6 pt-16 lg:pt-6 overflow-auto">
         <Outlet />
