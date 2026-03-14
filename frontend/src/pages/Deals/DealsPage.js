@@ -44,22 +44,22 @@ export default function DealsPage() {
   };
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
-  const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none";
+  const inputCls = "w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-sm text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none";
   const formatCurrency = (v) => `$${parseFloat(v || 0).toLocaleString()}`;
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Deals</h2>
+        <h2 className="text-2xl font-bold text-white">Deals</h2>
         <button onClick={() => { setForm(emptyForm); setModal(true); }}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+          className="bg-[#E50914] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#B20710] transition">
           + New Deal
         </button>
       </div>
 
       <div className="mb-4">
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm">
+          className="bg-[#333] border border-[#444] rounded px-4 py-2 text-sm text-white">
           <option value="">All Status</option>
           <option value="negotiation">Negotiation</option>
           <option value="confirmed">Confirmed</option>
@@ -69,11 +69,11 @@ export default function DealsPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-10 text-gray-500">Loading...</div>
+        <div className="text-center py-10 text-[#808080]">Loading...</div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+        <div className="bg-[#1f1f1f] rounded-lg border border-[#333] overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600">
+            <thead className="bg-[#181818] text-[#808080]">
               <tr>
                 <th className="px-4 py-3 text-left font-medium">Deal #</th>
                 <th className="px-4 py-3 text-left font-medium">Lead</th>
@@ -84,62 +84,60 @@ export default function DealsPage() {
                 <th className="px-4 py-3 text-left font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[#333]">
               {deals?.map((deal) => (
-                <tr key={deal.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-gray-800">#{deal.id}</td>
-                  <td className="px-4 py-3">{deal.lead_name}</td>
-                  <td className="px-4 py-3 hidden md:table-cell">{deal.car_brand} {deal.car_model}</td>
-                  <td className="px-4 py-3 font-semibold text-indigo-600">{formatCurrency(deal.sale_price)}</td>
-                  <td className="px-4 py-3 capitalize hidden sm:table-cell">{deal.payment_mode?.replace('_', ' ')}</td>
+                <tr key={deal.id} className="hover:bg-[#2a2a2a] transition-colors">
+                  <td className="px-4 py-3 font-medium text-white">#{deal.id}</td>
+                  <td className="px-4 py-3 text-[#aaa]">{deal.lead_name}</td>
+                  <td className="px-4 py-3 text-[#aaa] hidden md:table-cell">{deal.car_brand} {deal.car_model}</td>
+                  <td className="px-4 py-3 font-semibold text-[#E50914]">{formatCurrency(deal.sale_price)}</td>
+                  <td className="px-4 py-3 capitalize text-[#aaa] hidden sm:table-cell">{deal.payment_mode?.replace('_', ' ')}</td>
                   <td className="px-4 py-3"><StatusBadge status={deal.status} /></td>
                   <td className="px-4 py-3">
-                    <button onClick={() => showDetail(deal)} className="text-indigo-600 hover:underline text-xs">View</button>
+                    <button onClick={() => showDetail(deal)} className="text-[#E50914] hover:text-[#ff4d4d] text-xs">View</button>
                   </td>
                 </tr>
               ))}
               {deals?.length === 0 && (
-                <tr><td colSpan={7} className="px-4 py-10 text-center text-gray-500">No deals found</td></tr>
+                <tr><td colSpan={7} className="px-4 py-10 text-center text-[#808080]">No deals found</td></tr>
               )}
             </tbody>
           </table>
         </div>
       )}
 
-      {/* Detail Modal */}
       <Modal open={!!detail} onClose={() => setDetail(null)} title={`Deal #${detail?.id}`}>
         {detail && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3 text-sm">
-              <div><span className="text-gray-500">Lead:</span> <strong>{detail.lead_name}</strong></div>
-              <div><span className="text-gray-500">Phone:</span> {detail.lead_phone}</div>
-              <div><span className="text-gray-500">Car:</span> {detail.car_brand} {detail.car_model} ({detail.car_year})</div>
-              <div><span className="text-gray-500">Reg #:</span> {detail.registration_number || '-'}</div>
-              <div><span className="text-gray-500">Sale Price:</span> <strong className="text-indigo-600">{formatCurrency(detail.sale_price)}</strong></div>
-              <div><span className="text-gray-500">Commission:</span> {formatCurrency(detail.commission)}</div>
-              <div><span className="text-gray-500">Payment:</span> {detail.payment_mode?.replace('_', ' ')}</div>
-              <div><span className="text-gray-500">Status:</span> <StatusBadge status={detail.status} /></div>
-              {detail.closed_date && <div className="col-span-2"><span className="text-gray-500">Closed:</span> {new Date(detail.closed_date).toLocaleDateString()}</div>}
+              <div><span className="text-[#808080]">Lead:</span> <strong className="text-white">{detail.lead_name}</strong></div>
+              <div><span className="text-[#808080]">Phone:</span> <span className="text-[#aaa]">{detail.lead_phone}</span></div>
+              <div><span className="text-[#808080]">Car:</span> <span className="text-[#aaa]">{detail.car_brand} {detail.car_model} ({detail.car_year})</span></div>
+              <div><span className="text-[#808080]">Reg #:</span> <span className="text-[#aaa]">{detail.registration_number || '-'}</span></div>
+              <div><span className="text-[#808080]">Sale Price:</span> <strong className="text-[#E50914]">{formatCurrency(detail.sale_price)}</strong></div>
+              <div><span className="text-[#808080]">Commission:</span> <span className="text-[#aaa]">{formatCurrency(detail.commission)}</span></div>
+              <div><span className="text-[#808080]">Payment:</span> <span className="text-[#aaa]">{detail.payment_mode?.replace('_', ' ')}</span></div>
+              <div><span className="text-[#808080]">Status:</span> <StatusBadge status={detail.status} /></div>
+              {detail.closed_date && <div className="col-span-2"><span className="text-[#808080]">Closed:</span> <span className="text-[#aaa]">{new Date(detail.closed_date).toLocaleDateString()}</span></div>}
             </div>
             {detail.status === 'negotiation' && (
-              <div className="flex gap-2 pt-3 border-t">
+              <div className="flex gap-2 pt-3 border-t border-[#333]">
                 <button onClick={() => handleStatus(detail.id, 'confirmed')}
-                  className="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-emerald-700">Confirm</button>
+                  className="bg-emerald-700 text-white px-3 py-1.5 rounded text-sm hover:bg-emerald-600 transition">Confirm</button>
                 <button onClick={() => handleStatus(detail.id, 'cancelled')}
-                  className="bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-red-700">Cancel</button>
+                  className="bg-red-800 text-white px-3 py-1.5 rounded text-sm hover:bg-red-700 transition">Cancel</button>
               </div>
             )}
             {detail.status === 'confirmed' && (
-              <div className="flex gap-2 pt-3 border-t">
+              <div className="flex gap-2 pt-3 border-t border-[#333]">
                 <button onClick={() => handleStatus(detail.id, 'completed')}
-                  className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-700">Mark Completed</button>
+                  className="bg-green-700 text-white px-3 py-1.5 rounded text-sm hover:bg-green-600 transition">Mark Completed</button>
               </div>
             )}
           </div>
         )}
       </Modal>
 
-      {/* New Deal Modal */}
       <Modal open={modal} onClose={() => setModal(false)} title="New Deal">
         <form onSubmit={handleSubmit} className="space-y-3">
           <select value={form.lead_id} onChange={set('lead_id')} className={inputCls} required>
@@ -157,7 +155,7 @@ export default function DealsPage() {
           <select value={form.payment_mode} onChange={set('payment_mode')} className={inputCls}>
             {paymentModes.map(p => <option key={p} value={p}>{p.replace('_', ' ')}</option>)}
           </select>
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700">
+          <button type="submit" className="w-full bg-[#E50914] text-white py-2 rounded font-medium hover:bg-[#B20710] transition">
             Create Deal
           </button>
         </form>

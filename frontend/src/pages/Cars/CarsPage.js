@@ -60,26 +60,25 @@ export default function CarsPage() {
   };
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
-  const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none";
+  const inputCls = "w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-sm text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none";
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Car Inventory</h2>
+        <h2 className="text-2xl font-bold text-white">Car Inventory</h2>
         {canManage && (
           <button onClick={() => { setForm(emptyForm); setEditing(null); setModal(true); }}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+            className="bg-[#E50914] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#B20710] transition">
             + Add Car
           </button>
         )}
       </div>
 
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search brand/model..."
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm flex-1 focus:ring-2 focus:ring-indigo-500 outline-none" />
+          className="bg-[#333] border border-[#444] rounded px-4 py-2 text-sm text-white placeholder-[#808080] flex-1 focus:ring-2 focus:ring-[#E50914] outline-none" />
         <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}
-          className="border border-gray-300 rounded-lg px-4 py-2 text-sm">
+          className="bg-[#333] border border-[#444] rounded px-4 py-2 text-sm text-white">
           <option value="">All Status</option>
           <option value="available">Available</option>
           <option value="reserved">Reserved</option>
@@ -87,71 +86,68 @@ export default function CarsPage() {
         </select>
       </div>
 
-      {/* Car List */}
       {loading ? (
-        <div className="text-center py-10 text-gray-500">Loading...</div>
+        <div className="text-center py-10 text-[#808080]">Loading...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {cars?.map((car) => (
-            <div key={car.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition cursor-pointer"
+            <div key={car.id} className="bg-[#1f1f1f] rounded-lg border border-[#333] p-5 hover:bg-[#2a2a2a] hover:border-[#555] transition-all duration-200 cursor-pointer"
               onClick={() => setDetail(car)}>
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="font-semibold text-gray-800">{car.brand} {car.model}</h3>
-                  <p className="text-sm text-gray-500">{car.variant} - {car.year}</p>
+                  <h3 className="font-semibold text-white">{car.brand} {car.model}</h3>
+                  <p className="text-sm text-[#808080]">{car.variant} - {car.year}</p>
                 </div>
                 <StatusBadge status={car.status} />
               </div>
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+              <div className="grid grid-cols-2 gap-2 text-sm text-[#aaa]">
                 <span>{car.fuel_type} / {car.transmission}</span>
                 <span>{car.mileage ? `${car.mileage.toLocaleString()} km` : '-'}</span>
-                <span className="text-indigo-600 font-semibold">
+                <span className="text-[#E50914] font-semibold">
                   ${parseFloat(car.price_expected || 0).toLocaleString()}
                 </span>
-                <span className="text-gray-400">{car.registration_number || '-'}</span>
+                <span className="text-[#666]">{car.registration_number || '-'}</span>
               </div>
               {canManage && (
-                <div className="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+                <div className="flex gap-2 mt-3 pt-3 border-t border-[#333]">
                   <button onClick={(e) => { e.stopPropagation(); openEdit(car); }}
-                    className="text-xs text-indigo-600 hover:underline">Edit</button>
+                    className="text-xs text-[#E50914] hover:text-[#ff4d4d]">Edit</button>
                   {user?.role === 'admin' && (
                     <button onClick={(e) => { e.stopPropagation(); handleDelete(car.id); }}
-                      className="text-xs text-red-600 hover:underline">Delete</button>
+                      className="text-xs text-red-500 hover:text-red-400">Delete</button>
                   )}
                 </div>
               )}
             </div>
           ))}
-          {cars?.length === 0 && <p className="text-gray-500 col-span-3 text-center py-10">No cars found</p>}
+          {cars?.length === 0 && <p className="text-[#808080] col-span-3 text-center py-10">No cars found</p>}
         </div>
       )}
 
-      {/* Detail Modal */}
       <Modal open={!!detail} onClose={() => setDetail(null)} title="Car Details">
         {detail && (
           <div className="space-y-3 text-sm">
             <div className="grid grid-cols-2 gap-3">
-              <div><span className="text-gray-500">Brand:</span> <strong>{detail.brand}</strong></div>
-              <div><span className="text-gray-500">Model:</span> <strong>{detail.model}</strong></div>
-              <div><span className="text-gray-500">Variant:</span> {detail.variant || '-'}</div>
-              <div><span className="text-gray-500">Year:</span> {detail.year}</div>
-              <div><span className="text-gray-500">Mileage:</span> {detail.mileage?.toLocaleString() || '-'} km</div>
-              <div><span className="text-gray-500">Fuel:</span> {detail.fuel_type}</div>
-              <div><span className="text-gray-500">Transmission:</span> {detail.transmission}</div>
-              <div><span className="text-gray-500">Color:</span> {detail.color || '-'}</div>
-              <div><span className="text-gray-500">Reg #:</span> {detail.registration_number || '-'}</div>
-              <div><span className="text-gray-500">Status:</span> <StatusBadge status={detail.status} /></div>
-              <div><span className="text-gray-500">Expected:</span> ${parseFloat(detail.price_expected || 0).toLocaleString()}</div>
-              <div><span className="text-gray-500">Purchase:</span> ${parseFloat(detail.purchase_price || 0).toLocaleString()}</div>
+              <div><span className="text-[#808080]">Brand:</span> <strong className="text-white">{detail.brand}</strong></div>
+              <div><span className="text-[#808080]">Model:</span> <strong className="text-white">{detail.model}</strong></div>
+              <div><span className="text-[#808080]">Variant:</span> <span className="text-[#aaa]">{detail.variant || '-'}</span></div>
+              <div><span className="text-[#808080]">Year:</span> <span className="text-[#aaa]">{detail.year}</span></div>
+              <div><span className="text-[#808080]">Mileage:</span> <span className="text-[#aaa]">{detail.mileage?.toLocaleString() || '-'} km</span></div>
+              <div><span className="text-[#808080]">Fuel:</span> <span className="text-[#aaa]">{detail.fuel_type}</span></div>
+              <div><span className="text-[#808080]">Transmission:</span> <span className="text-[#aaa]">{detail.transmission}</span></div>
+              <div><span className="text-[#808080]">Color:</span> <span className="text-[#aaa]">{detail.color || '-'}</span></div>
+              <div><span className="text-[#808080]">Reg #:</span> <span className="text-[#aaa]">{detail.registration_number || '-'}</span></div>
+              <div><span className="text-[#808080]">Status:</span> <StatusBadge status={detail.status} /></div>
+              <div><span className="text-[#808080]">Expected:</span> <span className="text-[#E50914] font-semibold">${parseFloat(detail.price_expected || 0).toLocaleString()}</span></div>
+              <div><span className="text-[#808080]">Purchase:</span> <span className="text-[#aaa]">${parseFloat(detail.purchase_price || 0).toLocaleString()}</span></div>
             </div>
             {detail.condition_notes && (
-              <div><span className="text-gray-500">Condition:</span><p className="mt-1">{detail.condition_notes}</p></div>
+              <div><span className="text-[#808080]">Condition:</span><p className="mt-1 text-[#aaa]">{detail.condition_notes}</p></div>
             )}
           </div>
         )}
       </Modal>
 
-      {/* Add/Edit Modal */}
       <Modal open={modal} onClose={() => { setModal(false); setEditing(null); }} title={editing ? 'Edit Car' : 'Add Car'}>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
@@ -175,7 +171,7 @@ export default function CarsPage() {
             <input type="number" value={form.purchase_price} onChange={set('purchase_price')} placeholder="Purchase Price" className={inputCls} />
           </div>
           <textarea value={form.condition_notes} onChange={set('condition_notes')} placeholder="Condition notes..." className={inputCls} rows={3} />
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700">
+          <button type="submit" className="w-full bg-[#E50914] text-white py-2 rounded font-medium hover:bg-[#B20710] transition">
             {editing ? 'Update Car' : 'Add Car'}
           </button>
         </form>

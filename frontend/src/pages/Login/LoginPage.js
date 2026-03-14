@@ -27,38 +27,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 to-indigo-700 px-4">
-      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-[#141414] px-4"
+      style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9))' }}>
+      <div className="bg-[#000000]/75 rounded-md p-10 w-full max-w-md border border-[#333]">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-900">AutoCRM</h1>
-          <p className="text-gray-500 mt-2">Sign in to your account</p>
+          <h1 className="text-4xl font-bold text-[#E50914] tracking-wider">AutoCRM</h1>
+          <p className="text-[#808080] mt-2 text-sm">Sign in to your account</p>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">
+          <div className="bg-[#E50914]/20 border border-[#E50914]/50 text-[#E50914] px-4 py-3 rounded mb-4 text-sm">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-medium text-[#aaa] mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+              className="w-full bg-[#333] border border-[#444] rounded px-4 py-3 text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none"
               placeholder="admin@carcrm.com"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <label className="block text-sm font-medium text-[#aaa] mb-1">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+              className="w-full bg-[#333] border border-[#444] rounded px-4 py-3 text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none"
               placeholder="Enter password"
               required
             />
@@ -66,13 +67,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-medium hover:bg-indigo-700 transition disabled:opacity-50"
+            className="w-full bg-[#E50914] text-white py-3 rounded font-semibold hover:bg-[#B20710] transition-all duration-200 disabled:opacity-50 text-base"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-[#666] mt-8">
           Default: admin@carcrm.com / admin123
         </p>
       </div>

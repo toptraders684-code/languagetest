@@ -25,9 +25,8 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile toggle */}
       <button
-        className="lg:hidden fixed top-3 left-3 z-50 bg-indigo-600 text-white p-2 rounded-md"
+        className="lg:hidden fixed top-3 left-3 z-50 bg-[#E50914] text-white p-2 rounded-md"
         onClick={() => setOpen(!open)}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,16 +35,14 @@ export default function Sidebar() {
         </svg>
       </button>
 
-      {/* Overlay */}
-      {open && <div className="lg:hidden fixed inset-0 bg-black/50 z-30" onClick={() => setOpen(false)} />}
+      {open && <div className="lg:hidden fixed inset-0 bg-black/70 z-30" onClick={() => setOpen(false)} />}
 
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-indigo-900 text-white
-        transform transition-transform lg:translate-x-0
+      <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-[#0a0a0a] text-white
+        transform transition-transform lg:translate-x-0 border-r border-[#333]
         ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-5 border-b border-indigo-700">
-          <h1 className="text-xl font-bold">AutoCRM</h1>
-          <p className="text-indigo-300 text-sm mt-1">Car Resale Management</p>
+        <div className="p-5 border-b border-[#333]">
+          <h1 className="text-2xl font-bold text-[#E50914] tracking-wider">AutoCRM</h1>
+          <p className="text-[#808080] text-xs mt-1 uppercase tracking-widest">Car Resale</p>
         </div>
 
         <nav className="mt-4 flex-1">
@@ -58,8 +55,10 @@ export default function Sidebar() {
                 key={item.path}
                 to={item.path}
                 onClick={() => setOpen(false)}
-                className={`flex items-center px-5 py-3 text-sm transition-colors
-                  ${active ? 'bg-indigo-800 text-white border-r-4 border-indigo-400' : 'text-indigo-200 hover:bg-indigo-800'}`}
+                className={`flex items-center px-5 py-3 text-sm transition-all duration-200
+                  ${active
+                    ? 'bg-[#1a1a1a] text-white border-l-4 border-[#E50914]'
+                    : 'text-[#aaa] hover:bg-[#1a1a1a] hover:text-white border-l-4 border-transparent'}`}
               >
                 <svg className="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
@@ -70,12 +69,12 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-indigo-700">
-          <div className="text-sm text-indigo-300 mb-2">{user?.name}</div>
-          <div className="text-xs text-indigo-400 capitalize mb-3">{user?.role?.replace('_', ' ')}</div>
+        <div className="p-4 border-t border-[#333]">
+          <div className="text-sm text-[#e5e5e5] mb-1">{user?.name}</div>
+          <div className="text-xs text-[#808080] capitalize mb-3">{user?.role?.replace('_', ' ')}</div>
           <button
             onClick={logout}
-            className="text-sm text-indigo-300 hover:text-white transition-colors"
+            className="text-sm text-[#808080] hover:text-[#E50914] transition-colors"
           >
             Sign Out
           </button>

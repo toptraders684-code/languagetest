@@ -29,9 +29,8 @@ export default function TestDrivesPage() {
   };
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
-  const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none";
+  const inputCls = "w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-sm text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none";
 
-  // Group by date for calendar view
   const grouped = {};
   testDrives?.forEach((td) => {
     const date = new Date(td.scheduled_date).toLocaleDateString();
@@ -42,40 +41,40 @@ export default function TestDrivesPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Test Drives</h2>
+        <h2 className="text-2xl font-bold text-white">Test Drives</h2>
         <button onClick={() => setModal(true)}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+          className="bg-[#E50914] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#B20710] transition">
           + Schedule Test Drive
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-10 text-gray-500">Loading...</div>
+        <div className="text-center py-10 text-[#808080]">Loading...</div>
       ) : (
         <div className="space-y-6">
           {Object.entries(grouped).map(([date, drives]) => (
             <div key={date}>
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">{date}</h3>
+              <h3 className="text-sm font-semibold text-[#E50914] uppercase tracking-wide mb-3">{date}</h3>
               <div className="space-y-3">
                 {drives.map((td) => (
-                  <div key={td.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div key={td.id} className="bg-[#1f1f1f] rounded-lg border border-[#333] p-4 flex flex-col sm:flex-row sm:items-center gap-3 hover:bg-[#2a2a2a] transition">
                     <div className="flex-1">
-                      <p className="font-medium text-gray-800">{td.lead_name} - {td.car_brand} {td.car_model}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-white">{td.lead_name} - {td.car_brand} {td.car_model}</p>
+                      <p className="text-sm text-[#808080]">
                         {new Date(td.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         {td.location && ` at ${td.location}`}
                         {td.executive_name && ` | ${td.executive_name}`}
                       </p>
-                      {td.customer_feedback && <p className="text-sm text-gray-600 mt-1">Feedback: {td.customer_feedback}</p>}
+                      {td.customer_feedback && <p className="text-sm text-[#aaa] mt-1">Feedback: {td.customer_feedback}</p>}
                     </div>
                     <div className="flex items-center gap-2">
                       <StatusBadge status={td.status} />
                       {td.status === 'scheduled' && (
                         <>
                           <button onClick={() => handleStatus(td.id, 'completed')}
-                            className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded hover:bg-green-100">Complete</button>
+                            className="text-xs bg-green-900/50 text-green-400 px-2 py-1 rounded hover:bg-green-900 transition">Complete</button>
                           <button onClick={() => handleStatus(td.id, 'cancelled')}
-                            className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded hover:bg-red-100">Cancel</button>
+                            className="text-xs bg-red-900/50 text-red-400 px-2 py-1 rounded hover:bg-red-900 transition">Cancel</button>
                         </>
                       )}
                     </div>
@@ -84,7 +83,7 @@ export default function TestDrivesPage() {
               </div>
             </div>
           ))}
-          {testDrives?.length === 0 && <p className="text-gray-500 text-center py-10">No test drives scheduled</p>}
+          {testDrives?.length === 0 && <p className="text-[#808080] text-center py-10">No test drives scheduled</p>}
         </div>
       )}
 
@@ -100,7 +99,7 @@ export default function TestDrivesPage() {
           </select>
           <input type="datetime-local" value={form.scheduled_date} onChange={set('scheduled_date')} className={inputCls} required />
           <input value={form.location} onChange={set('location')} placeholder="Location" className={inputCls} />
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700">
+          <button type="submit" className="w-full bg-[#E50914] text-white py-2 rounded font-medium hover:bg-[#B20710] transition">
             Schedule
           </button>
         </form>

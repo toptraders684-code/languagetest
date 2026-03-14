@@ -44,24 +44,24 @@ export default function UsersPage() {
   };
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
-  const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none";
+  const inputCls = "w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-sm text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none";
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Users</h2>
+        <h2 className="text-2xl font-bold text-white">Users</h2>
         <button onClick={() => { setForm(emptyForm); setEditing(null); setModal(true); }}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+          className="bg-[#E50914] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#B20710] transition">
           + Add User
         </button>
       </div>
 
       {loading ? (
-        <div className="text-center py-10 text-gray-500">Loading...</div>
+        <div className="text-center py-10 text-[#808080]">Loading...</div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+        <div className="bg-[#1f1f1f] rounded-lg border border-[#333] overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600">
+            <thead className="bg-[#181818] text-[#808080]">
               <tr>
                 <th className="px-4 py-3 text-left font-medium">Name</th>
                 <th className="px-4 py-3 text-left font-medium hidden sm:table-cell">Email</th>
@@ -71,18 +71,18 @@ export default function UsersPage() {
                 <th className="px-4 py-3 text-left font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-[#333]">
               {users?.map((u) => (
-                <tr key={u.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-medium text-gray-800">{u.name}</td>
-                  <td className="px-4 py-3 text-gray-600 hidden sm:table-cell">{u.email}</td>
-                  <td className="px-4 py-3 capitalize">{u.role.replace('_', ' ')}</td>
-                  <td className="px-4 py-3 text-gray-600 hidden md:table-cell">{u.phone || '-'}</td>
+                <tr key={u.id} className="hover:bg-[#2a2a2a] transition-colors">
+                  <td className="px-4 py-3 font-medium text-white">{u.name}</td>
+                  <td className="px-4 py-3 text-[#aaa] hidden sm:table-cell">{u.email}</td>
+                  <td className="px-4 py-3 capitalize text-[#aaa]">{u.role.replace('_', ' ')}</td>
+                  <td className="px-4 py-3 text-[#aaa] hidden md:table-cell">{u.phone || '-'}</td>
                   <td className="px-4 py-3"><StatusBadge status={u.status} /></td>
                   <td className="px-4 py-3">
                     <div className="flex gap-2">
-                      <button onClick={() => openEdit(u)} className="text-indigo-600 hover:underline text-xs">Edit</button>
-                      <button onClick={() => handleDelete(u.id)} className="text-red-600 hover:underline text-xs">Delete</button>
+                      <button onClick={() => openEdit(u)} className="text-[#E50914] hover:text-[#ff4d4d] text-xs">Edit</button>
+                      <button onClick={() => handleDelete(u.id)} className="text-red-500 hover:text-red-400 text-xs">Delete</button>
                     </div>
                   </td>
                 </tr>
@@ -110,7 +110,7 @@ export default function UsersPage() {
             </select>
           </div>
           <input value={form.phone} onChange={set('phone')} placeholder="Phone" className={inputCls} />
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700">
+          <button type="submit" className="w-full bg-[#E50914] text-white py-2 rounded font-medium hover:bg-[#B20710] transition">
             {editing ? 'Update User' : 'Create User'}
           </button>
         </form>

@@ -28,50 +28,50 @@ export default function FollowupsPage() {
   };
 
   const set = (field) => (e) => setForm({ ...form, [field]: e.target.value });
-  const inputCls = "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none";
+  const inputCls = "w-full bg-[#333] border border-[#444] rounded px-3 py-2 text-sm text-white placeholder-[#808080] focus:ring-2 focus:ring-[#E50914] focus:border-[#E50914] outline-none";
 
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Follow-ups</h2>
+        <h2 className="text-2xl font-bold text-white">Follow-ups</h2>
         <div className="flex gap-2">
           <button onClick={() => setShowToday(!showToday)}
-            className={`px-3 py-2 rounded-lg text-sm font-medium ${showToday ? 'bg-indigo-100 text-indigo-700' : 'bg-gray-100 text-gray-600'}`}>
+            className={`px-3 py-2 rounded text-sm font-medium transition ${showToday ? 'bg-[#E50914]/20 text-[#E50914] border border-[#E50914]/50' : 'bg-[#333] text-[#aaa] border border-[#444]'}`}>
             {showToday ? "Today's" : "All"}
           </button>
           <button onClick={() => setModal(true)}
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+            className="bg-[#E50914] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[#B20710] transition">
             + Add Follow-up
           </button>
         </div>
       </div>
 
       {loading ? (
-        <div className="text-center py-10 text-gray-500">Loading...</div>
+        <div className="text-center py-10 text-[#808080]">Loading...</div>
       ) : (
         <div className="space-y-3">
           {followups?.map((f) => (
-            <div key={f.id} className={`bg-white rounded-xl shadow-sm border p-4 flex flex-col sm:flex-row sm:items-center gap-3
-              ${f.completed ? 'border-gray-200 opacity-60' : 'border-gray-100'}`}>
+            <div key={f.id} className={`bg-[#1f1f1f] rounded-lg border p-4 flex flex-col sm:flex-row sm:items-center gap-3 transition
+              ${f.completed ? 'border-[#333] opacity-50' : 'border-[#333] hover:bg-[#2a2a2a]'}`}>
               <div className="flex-1">
-                <p className="font-medium text-gray-800">{f.lead_name} <span className="text-gray-400">({f.lead_phone})</span></p>
-                <p className="text-sm text-gray-600 mt-1">{f.notes || 'No notes'}</p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="font-medium text-white">{f.lead_name} <span className="text-[#666]">({f.lead_phone})</span></p>
+                <p className="text-sm text-[#aaa] mt-1">{f.notes || 'No notes'}</p>
+                <p className="text-xs text-[#666] mt-1">
                   Due: {f.next_followup_date ? new Date(f.next_followup_date).toLocaleDateString() : 'Not set'}
                   {f.executive_name && ` | ${f.executive_name}`}
                 </p>
               </div>
               {!f.completed && (
                 <button onClick={() => markDone(f.id)}
-                  className="text-sm bg-green-50 text-green-700 px-3 py-1.5 rounded-lg hover:bg-green-100 whitespace-nowrap">
+                  className="text-sm bg-green-900/50 text-green-400 px-3 py-1.5 rounded hover:bg-green-900 transition whitespace-nowrap border border-green-700">
                   Mark Done
                 </button>
               )}
-              {f.completed && <span className="text-xs text-green-600 font-medium">Completed</span>}
+              {f.completed && <span className="text-xs text-green-500 font-medium">Completed</span>}
             </div>
           ))}
           {followups?.length === 0 && (
-            <p className="text-gray-500 text-center py-10">
+            <p className="text-[#808080] text-center py-10">
               {showToday ? "No follow-ups for today" : "No follow-ups found"}
             </p>
           )}
@@ -86,7 +86,7 @@ export default function FollowupsPage() {
           </select>
           <textarea value={form.notes} onChange={set('notes')} placeholder="Notes..." className={inputCls} rows={3} />
           <input type="date" value={form.next_followup_date} onChange={set('next_followup_date')} className={inputCls} required />
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700">
+          <button type="submit" className="w-full bg-[#E50914] text-white py-2 rounded font-medium hover:bg-[#B20710] transition">
             Create Follow-up
           </button>
         </form>
